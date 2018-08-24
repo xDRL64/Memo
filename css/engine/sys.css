@@ -1,0 +1,109 @@
+*{/*
+    word-break: keep-all;
+    text-overflow: clip;
+    white-space: nowrap;
+    overflow: visible;*/
+}
+
+html,body{
+    margin: 0px;
+    padding: 0px;
+    height: auto;
+    
+}
+
+textarea{
+    -moz-tab-size: 2;
+}
+
+
+
+#scrollview{
+    position: relative;
+
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    overflow-y: scroll;
+}
+
+#workarea{
+    position: relative;
+    min-height: 256px;
+    width: 100%;
+    background-color: teal;
+
+    padding-left: 32px;
+    box-sizing: border-box;
+
+    border-width: 10px;
+    border-style: solid;
+    border-color: blueviolet;
+}
+
+#workarea:focus{
+    border-color: coral;
+}
+
+
+
+
+
+#toolbar{
+    width: 100%;
+    background-color: aquamarine;
+
+    z-index: 100;
+}
+
+#textbar{
+    display:inline-block;
+    width:100%;
+    box-sizing:border-box;
+    overflow:hidden;
+    background-color:rgb(255, 187, 98);
+    transition: margin-top 0.5s;
+}
+
+
+
+#userprefbar{
+    position: relative;
+    background-color:rgb(255, 246, 121);
+}
+
+
+
+
+
+
+#stylebar{
+    position: relative;
+}
+
+#style_list{
+    position: absolute;
+
+    display: inline-block;
+    width: 48px;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    width: auto;
+    overflow-y: scroll;
+
+    -moz-user-select: none;   
+}
+
+.stylelistOption{
+    border: 1px solid black;
+    overflow-wrap: inherit;
+    box-sizing: border-box;
+}
+
+.stylelistOption:hover{
+    border: 1px solid red;
+    cursor: default;
+}

@@ -1,0 +1,38 @@
+.bloc {
+	background: linear-gradient(black, black, grey, #C0C0C0, grey, white );
+    padding: 10px;
+}
+
+.bloc-border{
+    margin: 10px;
+
+    padding: 1px;
+    background-color: black;
+}
+
+.bloc-title{
+    padding: 10px;
+    font-size: 40px;
+    color: white;
+}
+
+.bloc-body{
+    padding: 10px;
+
+    background: linear-gradient(white, grey, #C0C0C0);
+    height: auto;
+
+    overflow: hidden;
+}
+._ENGINE-editRclick.bloc-title:hover,
+._ENGINE-editRclick.bloc-border:hover{
+    border : 1px solid red;
+}
+/*
+div div:hover, span span:hover, div span:hover{
+    border : 1px solid red !important;
+}*/
+
+.ddd{
+    border: 3px solid transparent;border-image: linear-gradient(0deg, #3acfd5 0%, #3a4ed5 100%);border-image-slice: 1;
+}
