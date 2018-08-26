@@ -291,6 +291,34 @@ app.editor.get_verticalScrollPercent = function(elem, scrollElem){
 
 
 
+
+
+app.lib.HTMLemptyElementList = [
+    'area',
+    'base',
+    'br',
+    'col',
+    'embed',
+    'hr',
+    'img',
+    'input',
+    'keygen',
+    'link',
+    'meta',
+    'param',
+    'source',
+    'track',
+    'wbr'
+];
+
+
+
+
+
+
+
+
+
 app.lib.check_textContent = function(content){
     fixed = "";
     for(var i=0; i<content.length; i++)
@@ -775,3 +803,198 @@ app.lib.isFileAvailable = function(path){
         return false;
     }
 };
+
+
+
+
+
+
+
+
+
+
+app.lib.revome_children = function(parent){
+    while(parent.firstChild) parent.removeChild(parent.firstChild);
+};
+
+app.lib.revome_childrenButExclude = function(parent,excludeds){
+    var staticChildrenArray = [...parent.childNodes];
+    var toExclude;
+    for(let child of staticChildrenArray){
+        toExclude = false;
+        for(let excluded of excludeds)
+            toExclude = child===excluded? true : toExclude;
+        
+        if(!toExclude) parent.removeChild(child);
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.lib.tagFinder = function(htlmStr){
+    var tagTxt = htlmStr.match(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/);
+    
+    if(!tagTxt) return null;
+
+    var iChar  = htlmStr.indexOf(tagTxt);
+    
+    return {
+        tag : tagTxt[0],
+        i   : iChar
+    };
+};
+
+app.lib.isBodyOpenTag = function(htmlStr){
+    return htmlStr.test(/< *body[ *\/>]/i);
+};
+app.lib.isBodyCloseTag = function(htmlStr){
+    return htmlStr.test(/< *\/ *body[ *>]/i);
+};
+
+
+
+app.lib.check_commentsAndDoctype = function(htmlPart){
+    var rgx = /<!(?:(--)((?:.|\s)*)-->|(DOCTYPE))/;
+    var res = htmlPart.text.match(rgx);
+    if(res){
+        if(res[1] == '--')
+            htmlPart.type = 'comment';
+        else if(res[3] == 'DOCTYPE')
+            htmlPart.type = 'doctype';
+    }
+};
+
+app.lib.generate_htmlPart = function(htmlStrPart){
+    var rgx = new RegExp('^< *(\\/?) *(\\w+)[ *\\/>]','i');
+    var res = htmlStrPart.match(rgx);
+    var htmlPart;
+    if(res)
+        htmlPart = {
+            type : 'tag',
+            tag  : htmlStrPart,
+            name : res[2].toUpperCase(),
+            side : res[1]=='' ? 'start':'end'
+        };
+    else{
+        htmlPart = {
+            type : 'text',
+            text : htmlStrPart
+        };
+        this.check_commentsAndDoctype(htmlPart);
+    }
+    return htmlPart;
+};
+
+
+
+app.lib.get_htmlStrParts = function(str){
+    // match tout entre "< ... >" et tout entre "> ... <"
+    // (match tag et texte)
+    // sources :
+    //https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags
+    var rgx = new RegExp(`(?:<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>|(?:[^<>]*))`,'gm');
+    return str.match(rgx);
+};
+
+
+
+app.lib.generate_htmlParts = function(htmlStr){
+    var htmlStrParts = this.get_htmlStrParts(htmlStr);
+    var htmlParts = [];
+    for(let htmlStrPart of htmlStrParts){
+        let htmlPart = this.generate_htmlPart(htmlStrPart);
+        htmlParts.push(htmlPart);
+    }
+    return htmlParts;
+};
+
+
+app.lib.DOMParser = function(htmlStr){
+    var ES6DP = new DOMParser(htmlStr);
+    var HTMLdoc = ES6DP.parseFromString(htlmStr,'text/html');
+    //var htmlTag = HTMLdoc.documentElement;
+    this.revome_children(HTMLdoc.head);
+    this.revome_children(HTMLdoc.body);
+    var htmlParts = this.generate_htmlParts(htmlStr);
+
+};
+
+
+
+app.lib.tidyUpHtml = function(htmlParts, DOM){
+    var current = DOM;
+    var htmlTag = DOM.documentElement;
+    var headTag = DOM.head;
+    var bodyTag = DOM.body;
+    var step    = 'inFile' || 'inHtml' || 'inHead' || 'headBody' || 'inBody' || 'afterBody' || 'afterHtml';
+
+    var isHEADorBODY = function(tagName){
+        return tagName=="HEAD" || tagName=="BODY"
+    };
+
+    var inFileStepRules = function(htmlPart){
+        if(htmlPart.type == 'tag'){
+            if(htmlPart.name == "HTML"){
+                current = htmlTag;
+                step = 'inHtml';
+            }
+        }
+        else if(htmlPart.type == "text")
+            overBodyText += htmlPart.text;
+        else if(htmlPart.type == "comment")
+            continue;
+    };
+
+
+    var overBodyText = "";
+    for(let htmlPart of htmlParts){
+
+        if(step == 'inFile') inFileStepRules(htmlPart);
+
+    }
+
+};
+
+app.lib.get_htmlPartsBySide = function(htmlParts, side){
+    var output = [];
+    for(let htmlPart of htmlParts)
+        if(htmlPart.type=='tag' && htmlPart.side == side)
+            output.push(htmlPart);
+};
+
+
+
+
+
+
+
+
+
+
+
+app.lib.strSplitOnlyWithFirst = function(str, occ){
+    var oLen = occ.length;
+    var iChar = str.indexOf(occ);
+    var iSlice = iChar + oLen;
+    var firstPartWithOcc = str.substr(0,iSlice);
+    var secondPartWithoutOcc = str.substr(iSlice);
+    var firstPartWithoutOcc = firstPartWithOcc.split(occ)[0];
+    //if(firstPartWithoutOcc+occ+secondPartWithoutOcc === str) console.log("strsplitOnlyWithFirst : √");
+    return [firstPartWithoutOcc,secondPartWithoutOcc];
+};
+
+
+
+
+
+

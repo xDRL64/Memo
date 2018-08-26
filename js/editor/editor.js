@@ -289,3 +289,13 @@ app.menu.divtoiframe  = [ "Consider Text Content As BODY Content",
 app.dragNdrop.imgType = ["png","jpg","jpeg","gif","bmp"];
 
 app.dragNdrop.webType = ["html"];
+
+
+
+
+
+
+
+
+
+

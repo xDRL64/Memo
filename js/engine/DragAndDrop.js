@@ -318,7 +318,7 @@ app.dragNdrop.hardcode_CSSnJS = function(list_docTxt, params){
 
     for(var i=0; i<list_docTxt.length; i++)
         list_doc[i] = DP.parseFromString(list_docTxt[i], "text/html");
-    
+
     var params = { docs : list_doc };
     app.builder.resourceFormater(true, list_doc, app.transfer.docsToDataURL, params);
 };
