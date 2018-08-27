@@ -113,7 +113,7 @@ app.editor.ACTION_focusingManager = function(){
                 app.editor.currentFocus = app.editor.lastFocus;
 
             // si workarea avait deja le focus avant ce click
-            if(app.editor.lastFocus === app.workarea){
+//            if(app.editor.lastFocus === app.workarea){
 
                 // permet le focus sur editingElem ou bloc title
                 if(lastElemClicked === app.editor.editingElem
@@ -125,7 +125,7 @@ app.editor.ACTION_focusingManager = function(){
                         app.editor.currentFocus = parent;
                 }
 
-            }
+//            }
             
             // si on a une selection et qu'on perd le focus sur workarea
             // en clickant par exemple sur toolbar

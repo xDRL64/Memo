@@ -951,8 +951,9 @@ app.lib.tidyUpHtml = function(htmlParts, DOM){
         }
         else if(htmlPart.type == "text")
             overBodyText += htmlPart.text;
-        else if(htmlPart.type == "comment")
-            continue;
+        else if(htmlPart.type == "comment"){
+            
+        }
     };
 
 
