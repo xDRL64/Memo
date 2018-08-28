@@ -77,6 +77,10 @@ app.selections.do_selection = function(e){
     }
 }
 
+app.editor.startClickElem = null;
+app.editor.ACTION_mouseDownOnMemo = function(that, e){
+    app.editor.startClickElem = e.target;
+}
 
 app.editor.lastElemClicked = null;
 app.editor.editingBlocTitle = false;
@@ -92,9 +96,13 @@ app.editor.ACTION_focusingManager = function(){
     var bloctitleClass = app.engineCSS.built.bloctitle;
     var selectedClass = app.engineCSS.built.selected;
 
+    var startClickElem = app.editor.startClickElem
     var lastElemClicked = app.editor.lastElemClicked
+    
+    if(lastElemClicked)
+    if(lastElemClicked === startClickElem){
 
-    if(lastElemClicked){
+        app.editor.startClickElem = null;
 
         app.editor.lastFocus = app.editor.currentFocus;
 
@@ -151,7 +159,7 @@ app.editor.ACTION_focusingManager = function(){
         app.editor.lastElemClicked = null;
         app.editor.currentFocus.focus();
     }
-
+    
 };
 
 

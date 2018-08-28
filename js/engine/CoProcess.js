@@ -18,9 +18,14 @@ app.coprocess.init = function(){
     };
 
     // DOCUMENT KEYDOWN
-    app.editor.lastElemClicked = null;
     document.onkeydown = function(e){
         var delegate = app.editor.delegate_document_onkeydown;
+        app.coprocess.execute_delegate(delegate,this,e);
+    };
+
+    // DOCUMENT MOUSEDOWN
+    document.onmousedown = function(e){
+        var delegate = app.editor.delegate_document_onmousedown;
         app.coprocess.execute_delegate(delegate,this,e);
     };
 
@@ -148,6 +153,7 @@ app.editor.ACTION_preventBackspaceKey = function(that, e){
 /* *                        DELEGATES                             * */
 /* * - WORKAREA CLICK                                             * */
 /* * - WORKAREA KEYDOWN                                           * */
+/* * - DOCUMENT MOUSEDOWN                                         * */
 /* * - DOCUMENT MOUSEUP                                           * */
 /* * - WINDOW   RESIZE                                            * */
 /* * - WINDOW   SCROLL                                            * */
@@ -173,6 +179,10 @@ app.editor.delegate_workarea_onpaste = [
 
 app.editor.delegate_document_onkeydown = [
     app.editor.ACTION_preventBackspaceKey
+];
+
+app.editor.delegate_document_onmousedown = [
+    app.editor.ACTION_mouseDownOnMemo
 ];
 
 app.editor.delegate_document_onmouseup = [
