@@ -303,6 +303,37 @@ app.editor.ACTION_enterkeyTextEdit = function(that, e){
 
 
 
+// workare onkeydown delegate
+app.editor.ACTION_tabkeyTextEdit = function(that, e){
+    if(e.keyCode == 9
+    && document.activeElement === app.editor.editingElem){
+        e.preventDefault();
+
+        var docSelect = getSelection();
+        var select = [docSelect.anchorNode,docSelect.anchorOffset,
+                      docSelect.focusNode,docSelect.focusOffset];
+        // si il n'y a pas de selection text
+        if(docSelect.toString.length == 0
+        && select[0] === select[2]){
+            
+            var textNode = select[0];
+            var text = textNode.textContent;
+            var cursor = select[1]
+
+            var A_str = text.substring(0,cursor);
+            var B_str = text.substring(cursor);
+            var C_str = A_str + "\t" + B_str;
+
+            textNode.textContent = C_str;
+
+            var newCursorPos = cursor + 1;
+            docSelect.setBaseAndExtent(textNode,newCursorPos, textNode,newCursorPos);
+        }
+    }
+};
+
+
+
 app.toolbar.get_selectionProperties = function(selectRange){
     var mainParent = selectRange.commonAncestorContainer;
     var firstTxt = selectRange.startContainer;

@@ -317,8 +317,10 @@ app.lib.HTMLemptyElementList = [
 
 
 
-
-
+// fonctoin inutile car trop impressise
+// coller ou ecrir une tabulation dans un contentEditable qui n'a pas le style : white-space:pre;
+// remplace les '\t' (9) par des ' ' (160)
+// il faut plusieur ' ' (160) pour une tabulation
 app.lib.check_textContent = function(content){
     fixed = "";
     for(var i=0; i<content.length; i++)

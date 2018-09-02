@@ -170,6 +170,7 @@ app.editor.delegate_workarea_onclick = [
 app.editor.delegate_workarea_onkeydown = [
     app.editor.ACTION_arrowkeySelection,
     app.editor.ACTION_enterkeyTextEdit,
+    app.editor.ACTION_tabkeyTextEdit,
     app.editor.ACTION_undo
 ];
 

@@ -397,7 +397,9 @@ app.options.divToIframeAsBody = function(){
 
     var script = app.editor.script_preventDragoverNdropEvent;
 
-    var body = app.lib.check_textContent(target.textContent);
+    //var body = app.lib.check_textContent(target.textContent);
+    var body = target.textContent;
+
     var style = "style = 'overflow:hidden;' ";
     var doc = "<html "+style+"><head>"+script+"</head><body>"+body+"</body></html>";
     var originalDoc = "<html "+style+"><head></head><body>"+body+"</body></html>";
@@ -423,8 +425,9 @@ app.options.divToIframeAsHtml = function(){
     var iframe = app.editor.generate_memoIframe();
 
     var script = app.editor.script_preventDragoverNdropEvent;
-    var html = app.lib.check_textContent(target.textContent);
-    //var html = target.textContent;
+
+    //var html = app.lib.check_textContent(target.textContent);
+    var html = target.textContent;
 
     var style = "style = 'overflow:hidden;' ";
     var doc = "<html "+style+">"+script+html+"</html>";

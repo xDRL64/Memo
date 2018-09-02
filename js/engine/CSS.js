@@ -87,7 +87,21 @@ app.engineCSS.build = function(){
                   "}"                             +"\n\n";
         editorSheet.insertRule(css);
         this.editorSheetTxt += css;
+
+        // text editing elem
+        var css = "." + this.built.txtEdit + "{" +"\n"+
+                    "white-space: pre;"          +"\n"+
+                  "}"                            +"\n\n";
+        editorSheet.insertRule(css);
+        this.editorSheetTxt += css;
+
+
     editorSheet.disabled = false;
+
+
+
+
+
 
     // accede a sys styles
     var StyleTag = document.getElementById("styles_sys");
