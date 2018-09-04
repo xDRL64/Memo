@@ -110,6 +110,11 @@ app.menu.options["Transform Iframe Into Div"] = {
     srcCall : app.options.transform_iframeIntoDiv,
 };
 
+// ...
+app.menu.options["Text To InnerHTML Of Workarea"] = {
+    srcCall : app.options.assign_textContentToWorkareaInnerHTML,
+};
+
 
 // option pour copier le texte + le style
 app.menu.options["Copy Text"] = {
@@ -228,7 +233,8 @@ app.menu.options["TD"] = {
 // liste option pour le menu workarea
 app.menu.onworkarea = [ "New Bloc",
                         "Create New Element",
-                        "Past Selected Elements"
+                        "Past Selected Elements",
+                        "Copy Source Code",
                       ];
 
 app.menu.onbloc     = [ "Clone Bloc",
@@ -236,7 +242,7 @@ app.menu.onbloc     = [ "Clone Bloc",
                         "Create New Element",
                         "Delete Bloc",
                         "Past Selected Elements",
-                        "Copy Source Code"
+                        "Copy Source Code",
                       ];
 
 app.menu.onelement  = [ "Clone Element",
@@ -255,6 +261,7 @@ app.menu.onelement  = [ "Clone Element",
                         "Text To OuterHTML (/!\\Expert)",
                         "Transform Div Into Iframe",
                         "Transform Iframe Into Div",
+                        "Text To InnerHTML Of Workarea",
                       ];
                       
 app.menu.ontext     = [ "Copy Text",

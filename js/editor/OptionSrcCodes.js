@@ -348,6 +348,9 @@ app.options.copy_code = function(){
     var target = this.theapp.params.target;
     var blocTarget = this.theapp.params.blocTarget;
 
+    var htmlElemClass = app.engineCSS.built.htmlElem;
+
+
     // contrainte pour copier
     if( app.editor.runningMode == "NONE"
     && !app.editor.editingBlocTitle
@@ -357,8 +360,11 @@ app.options.copy_code = function(){
         if(blocTarget)
             app.lib.stringToClipboard(blocTarget.outerHTML);
         // Elem
-        else
+        else if(target.classList.contains(htmlElemClass))
             app.lib.stringToClipboard(target.outerHTML);
+        // Workarea
+        else if(target === app.workarea)
+            app.lib.stringToClipboard(target.innerHTML);
 
     }else alert("veillez deselectionner tout les elements," +
                 "et desactiver les edit mode (element et titre de bloc)");
@@ -475,6 +481,20 @@ app.options.transform_iframeIntoDiv = function(){
     // system : close menu
     app.menu.check_current();
 };
+
+app.options.assign_textContentToWorkareaInnerHTML = function(){
+    // system : save for undo
+    app.editor.save_stat();
+
+    var target = this.theapp.params.target;
+    app.workarea.innerHTML = target.textContent;
+
+    // system : close menu
+    app.menu.check_current();
+};
+
+
+
 
 
 app.options.copy_text = function(e){
